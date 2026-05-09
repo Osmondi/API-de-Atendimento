@@ -1,13 +1,13 @@
-### API de Atendimento Automático
+# API de Atendimento Automático
 
 Projeto desenvolvido com FastAPI para direcionamento automático de solicitações.
 
-# Tecnologias
+## Tecnologias
  Python
  FastAPI
  Uvicorn
 
-# Funcionalidades
+## Funcionalidades
  Recebimento de problemas
  Direcionamento automático de setor
  Rotas HTTP
