@@ -3,11 +3,11 @@
 Projeto desenvolvido com FastAPI para direcionamento automático de solicitações.
 
 ## Tecnologias
- Python
- FastAPI
- Uvicorn
+- Python
+- FastAPI
+- Uvicorn
 
 ## Funcionalidades
- Recebimento de problemas
- Direcionamento automático de setor
- Rotas HTTP
+- Recebimento de problemas
+- Direcionamento automático de setor
+- Rotas HTTP
