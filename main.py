@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+import requests
 
 app = FastAPI()
 
@@ -25,6 +26,20 @@ Escolha o número do setor relacionado ao seu problema:
 def home():
 
     return {"mensagem": menu}
+
+
+@app.get("/enviar")
+def enviar():
+
+    requests.post(
+        "https://api.ultramsg.com/instance176843/messages/chat",  
+        data={"token": "usn1rkwqyr2oe1ie",
+              "to": "5521967602311",
+              "body": "Olá, teste da API"
+    }
+    )
+
+    return{"mensagem": "Mensagem Enviada"}
 
 @app.get("/atendimento")
 def atendimento(opcao: str):
