@@ -127,3 +127,10 @@ def atendimento(opcao: str):
              "erro": "Opção inválida",
              "mensagem": menu
         }
+
+@app.post("/webhook")
+def webhook():
+
+    return {
+        "mensagem": "Webhook funcionando"
+    }
