@@ -1,7 +1,12 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 import requests
 
 app = FastAPI()
+
+
+TOKEN = "usn1rkwqyr2oe1ie"
+INSTANCE = "instance176843"
+
 
 menu = """ 
 Escolha o número do setor relacionado ao seu problema: 
@@ -27,110 +32,74 @@ def home():
 
     return {"mensagem": menu}
 
+@app.post("/wehook")
+async def webhook(request:Request):
 
-@app.get("/enviar")
-def enviar():
+    dados = await request.json()
 
-    requests.post(
-        "https://api.ultramsg.com/instance176843/messages/chat",  
-        data={"token": "usn1rkwqyr2oe1ie",
-              "to": "5521967602311",
-              "body": "Olá, teste da API"
-    }
-    )
+    mensagem = dados.get("body")
+    numero = dados.get("from")
 
-    return{"mensagem": "Mensagem Enviada"}
+    if mensagem == "1":
 
-@app.get("/atendimento")
-def atendimento(opcao: str):
-
-    if opcao == "1": 
-        return {
-            "setor": "Cartões",
-            "mensagem": "Você foi direcionado para o setor de Cartões."
-        }
+        resposta = "Você foi direcionado para o setor de Cartões."
     
-    elif opcao == "2": 
-        return {
-            "setor": "Conta Corrente",
-            "mensagem": "Você foi direcionado para o setor de Conta Corrente."
-        }
+    elif mensagem == "2": 
+        
+        resposta = "Você foi direcionado para o setor de Conta Corrente."
+        
+    elif mensagem == "3": 
+         
+        resposta = "Você foi direcionado para o setor de Contratos de Seguros."
+       
+    elif mensagem == "4": 
+          
+        resposta = "Você foi direcionado para o setor de Seguros."
     
-    elif opcao == "3": 
-        return {
-            "setor": "Contratos de Seguros",
-            "mensagem": "Você foi direcionado para o setor de Contratos de Seguros."
-        }
+    elif mensagem == "5": 
+           
+        resposta = "Você foi direcionado para o setor de Investimentos."
     
-    elif opcao == "4": 
-        return {
-            "setor": "Seguros",
-            "mensagem": "Você foi direcionado para o setor de Seguros."
-        }
+    elif mensagem == "6": 
+            
+        resposta = "Você foi direcionado para o setor de Fraude/Travas de Segurança."
     
-    elif opcao == "5": 
-        return {
-            "setor": "Investimentos",
-            "mensagem": "Você foi direcionado para o setor de Investimentos."
-        }
+    elif mensagem == "7": 
+        
+        resposta = "Você foi direcionado para o setor de Consignados."
+       
+    elif mensagem == "8": 
+        
+        resposta = "Você foi direcionado para o setor de Consórcios."
+        
+    elif mensagem == "9": 
+        
+        resposta = "Você foi direcionado para o setor de Financiamento Veicular."
+       
+    elif mensagem == "10": 
+        
+        resposta = "Você foi direcionado para o setor de Financiamento Imobiliário."
+       
+    elif mensagem == "11": 
+       
+        resposta = "Você foi direcionado para o setor de Desacordo Comercial."
+        
+    elif mensagem == "12": 
+        
+        resposta = "Você foi direcionado para o setor de Acordos."
+     
+    elif mensagem == "13": 
+        resposta = "Você foi direcionado para o setor de Câmbio."
     
-    elif opcao == "6": 
-        return {
-            "setor": "Fraude/Travas de Segurança",
-            "mensagem": "Você foi direcionado para o setor de Fraude/Travas de Segurança."
-        }
-    
-    elif opcao == "7": 
-        return {
-            "setor": "Consignados",
-            "mensagem": "Você foi direcionado para o setor de Consignados."
-        }
-    
-    elif opcao == "8": 
-        return {
-            "setor": "Consórcios",
-            "mensagem": "Você foi direcionado para o setor de Consórcios."
-        }
-    
-    elif opcao == "9": 
-        return {
-            "setor": "Financiamento Veicular",
-            "mensagem": "Você foi direcionado para o setor de Financiamento Veicular."
-        }
-    
-    elif opcao == "10": 
-        return {
-            "setor": "Financiamento Imobiliário",
-            "mensagem": "Você foi direcionado para o setor de Financiamento Imobiliário."
-        }
-    
-    elif opcao == "11": 
-        return {
-            "setor": "Desacordo Comercial",
-            "mensagem": "Você foi direcionado para o setor de Desacordo Comercial."
-        }
-    
-    elif opcao == "12": 
-        return {
-            "setor": "Acordos",
-            "mensagem": "Você foi direcionado para o setor de Acordos."
-        }
-    
-    elif opcao == "13": 
-        return {
-            "setor": "Câmbio",
-            "mensagem": "Você foi direcionado para o setor de Câmbio."
-        }
-
     else:
-        return {
-             "erro": "Opção inválida",
-             "mensagem": menu
-        }
-
-@app.post("/webhook")
-def webhook():
-
-    return {
-        "mensagem": "Webhook funcionando"
+        resposta = menu
+  
+  
+requests.post(f"https://api.ultramsg.com/instance176843/messages/chat",
+    data={
+        "token": "usn1rkwqyr2oe1ie",
+        "to": numero,
+        "body": resposta
     }
+
+)
