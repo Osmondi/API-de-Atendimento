@@ -4,8 +4,8 @@ import requests
 app = FastAPI()
 
 
-TOKEN = "usn1rkwqyr2oe1ie"
-INSTANCE = "instance176843"
+TOKEN = "******"
+INSTANCE = "******"
 
 
 menu = """ 
@@ -33,7 +33,7 @@ def home():
     return {"mensagem": menu}
 
 @app.post("/wehook")
-async def webhook(request:Request):
+async def webhook(request: Request):
 
     dados = await request.json()
 
@@ -95,11 +95,13 @@ async def webhook(request:Request):
         resposta = menu
   
   
-requests.post(f"https://api.ultramsg.com/instance176843/messages/chat",
-    data={
-        "token": "usn1rkwqyr2oe1ie",
-        "to": numero,
-        "body": resposta
-    }
+    requests.post(f"https://api.ultramsg.com/*******/messages/chat",
+                  data={
+                      "token": "usn1rkwqyr2oe1ie",
+                      "to": numero,
+                      "body": resposta
+                      }
 
 )
+
+    return {"status": "ok"}
